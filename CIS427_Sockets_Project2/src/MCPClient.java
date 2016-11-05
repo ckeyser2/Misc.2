@@ -86,6 +86,7 @@ public class MCPClient
 	  		//System.out.println("ReceiveData: " + receiveData);
 	  		//System.out.println("ReceiveData length: " + receiveData.length);
 	  		//clientSocketUDP.receive(receivePacket); 
+	  		int recvdLength =0;
 	  		for (int j =0;j<3598;j++)
 	  		{
 	  			DatagramPacket receivePacket = new DatagramPacket(receiveData,receiveData.length);
@@ -94,10 +95,13 @@ public class MCPClient
 	  			//x= receiveData.length;
 	  			//=[x];
 	  			System.out.println("ReceiveData: " + value);
-		  		System.out.println("ReceiveData length: " + receiveData.length);
+		  		//System.out.println("ReceiveData length: " + receiveData.length);
 		  		clientSocketUDP.receive(receivePacket); 
-	  			modifiedSentenceUDP = (receivePacket.getData()); 
-	  			System.out.println("FROM SERVER:" + modifiedSentenceUDP); 
+		  		byte[] data = new byte[receivePacket.getLength()];
+	  			modifiedSentenceUDP = (receivePacket.getData());
+	  			recvdLength = recvdLength + data.length;   //to keep running track of bytes ** need to add 4 for sequence num I think
+	  			System.out.println("Sequence num:  " + recvdLength);
+	  			//System.out.println("FROM SERVER:" + modifiedSentenceUDP); 
 	  		}
 	  		clientSocketUDP.close();
 	      } 
